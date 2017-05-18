@@ -1,0 +1,17 @@
+<openerp>
+    <data>
+
+        <record id="account_invoice_confirm_view_" model="ir.ui.view">
+            <field name="name">account.invoice.confirm.form</field>
+            <field name="model">account.invoice.confirm</field>
+            <field name="inherit_id" ref="account.account_invoice_confirm_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@string='Confirm Draft Invoices']/footer" position="inside">
+                    <div class="oe_right">
+                        <field name="wizard_force_validation" help="Force invoice validation"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

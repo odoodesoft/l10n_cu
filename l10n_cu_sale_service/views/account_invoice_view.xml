@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="invoice_form_l10n_cu_sale_service" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="no_complete_tasks" readonly="1" invisible="1"/>
+                </field>
+                <xpath expr="//header/button[5]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('no_complete_tasks','=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//header/button[6]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('no_complete_tasks','=', True)]}</attribute>
+                </xpath>
+                <!--Botón para sustituir los botones de Validar en la factura cuando la misma tiene lineas asociadas a tareas que
+                no esten al 100% de progreso. Mostrará un mensaje de confirmacion y llamará al metodo para validar pasando por
+                contexto la variable que indica que se forzara la validacion-->
+                <xpath expr="//header/button[5]" position="before">
+                    <button name="invoice_open_force" states="draft,proforma2" string="Validate"
+                            class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|',('no_complete_tasks','=', False)]}"
+                            confirm = 'The are tasks associated to this invoice that are not at 100% of progress:
+                            Do you want to validate the invoice anyway?'
+                            context="{'force_invoice_validation':True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
